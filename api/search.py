@@ -20,7 +20,7 @@ class handler(BaseHTTPRequestHandler):
 
     def _set_headers(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'application/xml')
         self.send_header('Access-Control-Allow-Credentials', 'true')
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
@@ -38,6 +38,7 @@ class handler(BaseHTTPRequestHandler):
         print(post_body)
         # headers = create_headers(bearer_token)
         xml_response = query_api(json.loads(post_body.decode()))
+        print(xml_response)
         self.wfile.write(xml_response.text)
         return
 
