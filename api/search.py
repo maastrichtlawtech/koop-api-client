@@ -34,8 +34,8 @@ class handler(BaseHTTPRequestHandler):
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
         # headers = create_headers(bearer_token)
-        xml_response = query_api(json.loads(post_body.decode()))
-        self.wfile.write(xml_response.text.encode('utf-8'))
+        # xml_response = query_api(json.loads(post_body.decode()))
+        self.wfile.write(json.loads(post_body.decode()).encode('utf-8'))
         return
 
 
