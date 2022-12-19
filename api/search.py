@@ -33,12 +33,12 @@ class handler(BaseHTTPRequestHandler):
         #     self.wfile.write(json.dumps(
         #         {"error": str(origin + " " + "not allowed")}).encode())
         #     return
-        content_len = int(self.headers.get('content-length', 0))
-        post_body = self.rfile.read(content_len)
-        print(post_body)
+        # content_len = int(self.headers.get('content-length', 0))
+        # post_body = self.rfile.read(content_len)
+        # print(post_body)
         # headers = create_headers(bearer_token)
-        xml_response = query_api(json.loads(post_body.decode()))
-        print(xml_response)
+        # xml_response = query_api(json.loads(post_body.decode()))
+        # print(xml_response)
         # self.wfile.write(xml_response.text)
         self.wfile.write('Hello, world!'.encode('utf-8'))
         return
