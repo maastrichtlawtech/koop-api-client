@@ -5,12 +5,14 @@ import json
 
 
 def query_api(params):
-    print(params)
-    query = params["query"]
-    limit = params["limit"]
     response = requests.get(
-        'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"{query}\"&maximumRecords={limit}')
-    print(response.status_code)
+        'https://repository.overheid.nl/sru?query=cql.textAndIndexes=building&maximumRecords=10')
+    # print(params)
+    # query = params["query"]
+    # limit = params["limit"]
+    # response = requests.get(
+    #     'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"{query}\"&maximumRecords={limit}')
+    # print(response.status_code)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response
@@ -37,10 +39,10 @@ class handler(BaseHTTPRequestHandler):
         # post_body = self.rfile.read(content_len)
         # print(post_body)
         # headers = create_headers(bearer_token)
-        # xml_response = query_api(json.loads(post_body.decode()))
+        xml_response = query_api('hola')
         # print(xml_response)
         # self.wfile.write(xml_response.text)
-        self.wfile.write('Hello, world!'.encode('utf-8'))
+        self.wfile.write(xml_response.text.encode('utf-8'))
         return
 
 
