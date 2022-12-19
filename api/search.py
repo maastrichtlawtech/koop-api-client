@@ -35,6 +35,7 @@ class handler(BaseHTTPRequestHandler):
         #     return
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
+        print(post_body)
         # headers = create_headers(bearer_token)
         xml_response = query_api(json.loads(post_body.decode()))
         self.wfile.write(xml_response.text)
