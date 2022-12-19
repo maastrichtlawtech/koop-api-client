@@ -7,7 +7,7 @@ import json
 
 def query_api(query, limit):
     response = requests.get(
-        'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"{query}\"&maximumRecords={limit}')
+        'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"' + query + '\"&maximumRecords=' + limit)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response
@@ -35,8 +35,8 @@ class handler(BaseHTTPRequestHandler):
         # headers = create_headers(bearer_token)
         s = self.path
         dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
-        # xml_response = query_api(dic["query"], dic["limit"])
-        self.wfile.write(dic["query"].encode('utf-8'))
+        xml_response = query_api(dic["query"], dic["limit"])
+        self.wfile.write(xml_response.text.encode('utf-8'))
         return
 
 
