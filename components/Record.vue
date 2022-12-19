@@ -148,25 +148,30 @@ export default {
         url.searchParams.append('xml_url', this.xml_url);
         url.searchParams.append('depth', 1);
         const response = await fetch(url);
-        let xml = await response.text();
+        console.log(response);
+        const text = await response.text();
+        // const matches = await response.json();
+        console.log(text);
+        console.log('dd');
+        // let xml = await response.text();
 
-        const myRe = new RegExp('<extref(.*?)</extref>', 'g');
-        let matches = xml.match(myRe);
-        if (matches) {
-          for (let i = 0; i < matches.length; i++) {
-            parseString(matches[i], (err, result) => {
-              this.citations.push(result);
-              if (i == matches.length-1) {
-                this.loading_citations = false;
-                this.already_loaded_citations = true;
-              }
-            });
-          }
-        }
-        else {
-          this.loading_citations = false;
-          this.already_loaded_citations = true;
-        }
+        // const myRe = new RegExp('<extref(.*?)</extref>', 'g');
+        // let matches = xml.match(myRe);
+        // if (matches) {
+        //   for (let i = 0; i < matches.length; i++) {
+        //     parseString(matches[i], (err, result) => {
+        //       this.citations.push(result);
+        //       if (i == matches.length-1) {
+        //         this.loading_citations = false;
+        //         this.already_loaded_citations = true;
+        //       }
+        //     });
+        //   }
+        // }
+        // else {
+        //   this.loading_citations = false;
+        //   this.already_loaded_citations = true;
+        // }
       }
     },
     mounted() {

@@ -8,7 +8,7 @@ def query_api(xml_url, depth):
     response = requests.get(xml_url)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
-    citations = re.findall("<extref>(.*?)</extref>", response.text)
+    citations = re.findall("<extref(.*?)</extref>", response.text)
     return citations
 
 
