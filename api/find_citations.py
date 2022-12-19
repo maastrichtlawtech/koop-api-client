@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 import requests
+import json
 from urllib import parse
 import re
 
@@ -16,7 +17,7 @@ class handler(BaseHTTPRequestHandler):
 
     def _set_headers(self):
         self.send_response(200)
-        self.send_header('Content-type', 'application/xml')
+        self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Credentials', 'true')
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
@@ -26,5 +27,5 @@ class handler(BaseHTTPRequestHandler):
         s = self.path
         dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
         citations = query_api(dic["xml_url"], dic["depth"])
-        self.wfile.write(str(citations))
+        self.wfile.write(json.dumps(citations).encode('utf-8'))
         return

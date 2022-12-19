@@ -150,9 +150,10 @@ export default {
         const response = await fetch(url);
         console.log(response);
         const text = await response.text();
-        // const matches = await response.json();
         console.log(text);
         console.log('dd');
+        const matches = await response.json();
+        console.log(matches);
         // let xml = await response.text();
 
         // const myRe = new RegExp('<extref(.*?)</extref>', 'g');
