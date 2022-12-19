@@ -5,6 +5,7 @@ import json
 
 
 def query_api(params):
+    print(params)
     query = params["query"]
     limit = params["limit"]
     response = requests.get(
