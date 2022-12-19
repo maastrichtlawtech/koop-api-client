@@ -9,7 +9,7 @@ def query_api(params):
     query = params["query"]
     limit = params["limit"]
     response = requests.get(
-        'https://repository.overheid.nl/sru?query=cql.textAndIndexes={query}&maximumRecords={limit}')
+        'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"{query}\"&maximumRecords={limit}')
     print(response.status_code)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)

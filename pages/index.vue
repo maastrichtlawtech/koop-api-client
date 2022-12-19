@@ -47,7 +47,7 @@ export default {
       let query = document.getElementById('query_input').value;
       let limit = document.getElementById('limit_input').value;
       var url = new URL("https://koop-api-client-flying-forward.vercel.app/api/search")
-      url.searchParams.append('query', '\"' + query + '\"');
+      url.searchParams.append('query', query);
       url.searchParams.append('limit', limit);
       const response = await fetch(url);
       console.log(response)
@@ -55,10 +55,10 @@ export default {
       let xml = await response.text();
       console.log(xml)
 
-      parseString(xml, (err, result) => {
-        this.records = result['sru:searchRetrieveResponse']['sru:records'][0]['sru:record'];
-        this.loading = false;
-      });
+      // parseString(xml, (err, result) => {
+      //   this.records = result['sru:searchRetrieveResponse']['sru:records'][0]['sru:record'];
+      //   this.loading = false;
+      // });
       
     }
   },
