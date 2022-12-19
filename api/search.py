@@ -36,7 +36,7 @@ class handler(BaseHTTPRequestHandler):
         s = self.path
         dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
         # xml_response = query_api(dic["query"], dic["limit"])
-        self.wfile.write(s.encode('utf-8'))
+        self.wfile.write(dic["query"].encode('utf-8'))
         return
 
 
