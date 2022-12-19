@@ -46,15 +46,12 @@ export default {
 
       let query = document.getElementById('query_input').value;
       let limit = document.getElementById('limit_input').value;
-      let url = "https://koop-api-client-flying-forward.vercel.app/api/search";
-      const response = await fetch(url, {
-        method: "post",
-        body: JSON.stringify({
-          query: query,
-          limit: limit
-        })
-      })
-      console.log(response);
+      let url = new URL("https://koop-api-client-flying-forward.vercel.app/api/search")
+      url.searchParams.append('query', query);
+      url.searchParams.append('limit', limit);
+      const response = await fetch(url);
+      console.log(response)
+      // const response = await fetch(`https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"${query}\"&maximumRecords=${limit}`)
       let xml = await response.text();
       console.log(xml)
 

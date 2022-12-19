@@ -1,12 +1,11 @@
 from http.server import BaseHTTPRequestHandler
 import requests
+from urllib import parse
 # import xmltodict
 import json
 
 
-def query_api(params):
-    query = params["query"]
-    limit = params["limit"]
+def query_api(query, limit):
     response = requests.get(
         'https://repository.overheid.nl/sru?query=cql.textAndIndexes=\"{query}\"&maximumRecords={limit}')
     if response.status_code != 200:
@@ -23,7 +22,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
-    def do_POST(self):
+    def do_GET(self):
         self._set_headers()
         # origin = self.headers["origin"]
         # if(origin != 'https://findspaces.net'):
@@ -31,11 +30,13 @@ class handler(BaseHTTPRequestHandler):
         #     self.wfile.write(json.dumps(
         #         {"error": str(origin + " " + "not allowed")}).encode())
         #     return
-        content_len = int(self.headers.get('content-length', 0))
-        post_body = self.rfile.read(content_len)
+        # content_len = int(self.headers.get('content-length', 0))
+        # post_body = self.rfile.read(content_len)
         # headers = create_headers(bearer_token)
-        # xml_response = query_api(json.loads(post_body.decode()))
-        self.wfile.write(json.loads(post_body.decode()).encode('utf-8'))
+        s = self.path
+        dic = dict(parse.parse_qsl(parse.urlsplit(s).query))
+        xml_response = query_api(dic["query"], dic["limit"])
+        self.wfile.write(xml_response.text.encode('utf-8'))
         return
 
 
