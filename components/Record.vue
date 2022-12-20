@@ -63,6 +63,7 @@
 </template>
   
 <script>
+import { mapMutations } from 'vuex'
 var parseString = require('xml2js').parseString;
 
 export default {
@@ -151,10 +152,16 @@ export default {
         const text = await response.text();
         const matches = JSON.parse(text);
 
+        const source = this.identifier;
+        this.add_node({ data: { id: source, link: this.zoek_url, color: 'red' }});
+
         if (matches?.length > 0) {
           for (let i = 0; i < matches.length; i++) {
             parseString(matches[i], (err, result) => {
               this.citations.push(result);
+              const target = result['extref']['_'];
+              this.add_node({ data: { id: target, link: result['extref']['$']['doc'], color: 'lightgray' }});
+              this.add_edges({ data: { id: source + target, source: source, target: target }});
               if (i == matches.length-1) {
                 this.loading_citations = false;
                 this.already_loaded_citations = true;
@@ -166,6 +173,12 @@ export default {
           this.loading_citations = false;
           this.already_loaded_citations = true;
         }
+      },
+      add_node(node) {
+        this.$store.commit('graph/add_node', node)
+      },
+      add_edges(edge) {
+        this.$store.commit('graph/add_edge', edge)
       }
     },
     mounted() {

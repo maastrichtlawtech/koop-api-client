@@ -36,7 +36,11 @@ export default {
   data() {
     return {
       records: [],
-      loading: false
+      loading: false,
+      graph: {
+        nodes: [],
+        edges: []
+      }
     }
   },
   methods: {
@@ -60,7 +64,7 @@ export default {
     }
   },
   mounted() {
-
+    this.$store.commit('graph/clear');
   }
 }
 </script>
