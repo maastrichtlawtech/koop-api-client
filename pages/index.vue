@@ -70,6 +70,6 @@ export default {
 </script>
 <style>
 #limit_input {
-  width: 120px;
+  width: 100px;
 }
 </style>

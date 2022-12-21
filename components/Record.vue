@@ -47,12 +47,7 @@
           <b-spinner v-show="loading_citations" label="Loading.." variant="info"></b-spinner>
             <ol class="text-left">
               <li class="" v-for="(citation, index) in citations" :key="accordion + '_' + index">
-                <div v-if="citation['extref']['$']['soort'] == 'URL'">
-                  <span class="mx-3">[{{ citation['extref']['_'] }}]</span><a target="_blank" :href="citation['extref']['$']['doc']">{{citation['extref']['$']['doc']}}</a>
-                </div>
-                <div v-else-if="citation['extref']['$']['soort'] == 'document'">
-                  <span class="mx-3">[{{ citation['extref']['_'] }}]</span><a target="_blank" :href="'https://zoek.officielebekendmakingen.nl/' + citation['extref']['$']['doc']">{{'https://zoek.officielebekendmakingen.nl/' + citation['extref']['$']['doc']}}</a>
-                </div>
+                <span class="mx-3">[{{ citation['extref']['_'] }}]</span><a target="_blank" :href="citation_link(citation)">{{citation_link(citation)}}</a>
               </li>
             </ol>
         </div>
@@ -142,6 +137,15 @@ export default {
         }
     },
     methods: {
+      citation_link(citation) {
+        if(citation['extref']['$']['soort'] == 'document') {
+          return 'https://zoek.officielebekendmakingen.nl/' + citation['extref']['$']['doc'];
+        }
+        else if(citation['extref']['$']['soort'] == 'URL') {
+          return citation['extref']['$']['doc'];
+        }
+        return '/';
+      },
       async find_citations(depth) {
         this.loading_citations = true;
 
@@ -160,7 +164,7 @@ export default {
             parseString(matches[i], (err, result) => {
               this.citations.push(result);
               const target = result['extref']['_'];
-              this.add_node({ data: { id: target, link: result['extref']['$']['doc'], color: 'lightgray' }});
+              this.add_node({ data: { id: target, link: this.citation_link(result), color: 'lightgray' }});
               this.add_edges({ data: { id: source + target, source: source, target: target }});
               if (i == matches.length-1) {
                 this.loading_citations = false;

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <h1 class="my-3 text-center">Graph</h1>
+          <!-- <h1 class="my-3 text-center">Graph</h1> -->
           <Graph :graph="graph"></Graph>
         </div>
       </div>

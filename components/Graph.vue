@@ -1,7 +1,9 @@
 <template>
+  <div>
+    <GraphInfo :info="info"></GraphInfo>
     <div id="cy">
-       
     </div>
+  </div>
 </template>
 <script>
 import cytoscape from 'cytoscape';
@@ -12,9 +14,24 @@ let cy = null;
 export default {
     props: ["graph"],
     data() {
-        return {
-            
+      return {
+        info: {
+          title: "Graph Info",
+          general: {
+            title: "General",
+            tuples: [
+              { name: "Total Nodes", value: this.graph.nodes.length },
+              { name: "Total Edges", value: this.graph.edges.length }
+            ]
+          },
+          selected_node: {
+            title: "Selected Node",
+            tuples: [
+                
+            ]
+          },
         }
+      }
     },
     mounted() {
         
@@ -45,14 +62,22 @@ export default {
                 }
             ]
         });
-        console.log(cy)
+        console.log(cy);
+
+        cy.on('tap', 'node', (evt) => {
+          var node = evt.target;
+          this.info.selected_node.tuples = [
+            { name: "id", value: node.data('id') },
+            { name: "link", value: node.data('link') }
+          ]
+        });
     },
 }
 </script>
 <style>
 #cy {
     width: 100%;
-    height: 700px;
+    height: calc(100vh - 126px);
     outline: black dotted 1px;
 }
 </style>
