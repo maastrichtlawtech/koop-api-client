@@ -11,7 +11,7 @@
         <h4>{{ info.selected_node.title }}</h4>
         <div v-for="t in info.selected_node.tuples" :key="t.name">
           <span>{{ t.name }}:</span> 
-          <a v-if="t.name=='link'" :href="t.value">{{ t.value }}</a>
+          <a v-if="t.name=='link'" :href="t.value" target="_blank">{{ t.value }}</a>
           <span v-else>{{ t.value }}</span>
         </div>
       </div> 

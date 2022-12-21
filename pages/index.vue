@@ -55,7 +55,8 @@ export default {
       url.searchParams.append('limit', limit);
       const response = await fetch(url);
       let xml = await response.text();
-
+      console.log(response)
+      console.log(xml)
       parseString(xml, (err, result) => {
         this.records = result['sru:searchRetrieveResponse']['sru:records'][0]['sru:record'];
         this.loading = false;
