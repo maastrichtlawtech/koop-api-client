@@ -14,6 +14,22 @@
               </b-input-group-append>
             </b-input-group>
           </div>
+          <div>
+            <b-embed
+              type="iframe"
+              aspect="16by9"
+              src="https://fairmodels.org/index.ttl"
+              allowfullscreen
+            ></b-embed>
+          </div>
+          <div>
+            <b-embed
+              type="iframe"
+              aspect="16by9"
+              src="https://raw.githubusercontent.com/MaastrichtU-CDS/FAIRmodels/main/models/radiotherapy/stiphout_2011.ttl"
+              allowfullscreen
+            ></b-embed>
+          </div>
           <div class="my-5">
             <h2 v-show="records.length && !loading">{{ records.length }}  Results </h2>
             <b-spinner v-show="loading" label="Loading..." variant="info"></b-spinner>
